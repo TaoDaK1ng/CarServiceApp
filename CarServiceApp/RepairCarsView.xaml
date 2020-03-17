@@ -1,0 +1,47 @@
+﻿<Window x:Class="CarServiceApp.RepairCarsView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CarServiceApp"
+        mc:Ignorable="d"
+        Title="RepairCarsView" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="400*"/>
+            <ColumnDefinition Width="400"/>
+        </Grid.ColumnDefinitions>
+
+        <ListBox Grid.Column="0" ItemsSource="{Binding RepairCars}"
+                 SelectedItem="{Binding SelectedRepairCar}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Margin="5">
+                        <TextBlock FontSize="18" Text="{Binding Path=Malfunction}" />
+                        <TextBlock Text="{Binding Path=Production_Date}" />
+                        <TextBlock Text="{Binding Path=Expiration_Date}" />
+                        <TextBlock Text="{Binding Path=Cost}" />
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <StackPanel Grid.Column="1" DataContext="{Binding SelectedRepairCar}" VerticalAlignment="Top" Height="230">
+            <TextBlock Text="Выбранный элемент"  />
+            <TextBlock Text="Машина" />
+            <TextBox Text="{Binding Car_Id}" IsEnabled="False"/>
+            <TextBlock Text="Мастер" />
+            <TextBox Text="{Binding Master_Id}" IsEnabled="False"/>
+            <TextBlock Text="Неисправность" />
+            <TextBox Text="{Binding Malfunction}" IsEnabled="False"/>
+            <TextBlock Text="Дата постановки" />
+            <TextBox Text="{Binding Production_Date}" IsEnabled="False"/>
+            <TextBlock Text="Дата окончания" />
+            <TextBox Text="{Binding Expiration_Date}" IsEnabled="False"/>
+            <TextBlock Text="Стоимость" />
+            <TextBox Text="{Binding Cost}" IsEnabled="False"/>
+        </StackPanel>
+        <Button Content="Создать" Command="{Binding AddCommand}" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="10,0,10,149" FontSize="14" Padding="5" RenderTransformOrigin="0.516,-3.329"/>
+        <Button Content="Изменить" Command="{Binding UpdateCommand}" CommandParameter="{Binding SelectedRepairCar}" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="10,0,10,105" FontSize="14" Padding="5" RenderTransformOrigin="0.516,-3.329"/>
+        <Button Content="Удалить" Command="{Binding DeleteCommand}" CommandParameter="{Binding SelectedRepairCar}" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="10,0,10,57" FontSize="14" Padding="5" RenderTransformOrigin="0.516,-3.329"/>
+    </Grid>
+</Window>

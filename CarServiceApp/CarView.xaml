@@ -1,0 +1,29 @@
+﻿<Window x:Class="CarServiceApp.CarView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CarServiceApp"
+        mc:Ignorable="d"
+        Title="CarView" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Column="0" VerticalAlignment="Top" Height="200">
+            <TextBlock Text="Марка" />
+            <TextBox Name="BrandText" Text="{Binding Brand}" />
+            <TextBlock Text="Модель" />
+            <TextBox Name="ModelText" Text="{Binding Model}" />
+            <TextBlock Text="Государственный номер" />
+            <TextBox Name="GovernmentNumberText" Text="{Binding Government_Number}" />
+            <TextBlock Text="Пробег" />
+            <TextBox Name="MileageText" Text="{Binding Mileage}" />
+            <TextBlock Text="Объем двигателя" />
+            <TextBox Name="EngineCapacityText" Text="{Binding Engine_Capacity}" />
+        </StackPanel>
+        <Button Name="AddButton" Command="{Binding AddCommand}" Content="Создать" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="10,0,10,188" FontSize="14" Padding="5" RenderTransformOrigin="0.516,-3.329"/>
+        <Button Name="UpdateButton" Command="{Binding UpdateCommand}" Content="Изменить" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="10,0,10,188" FontSize="14" Padding="5" RenderTransformOrigin="0.516,-3.329"/>
+        <Button Name="CancelButton" Command="{Binding CancelCommand}" Content="Отмена" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="10,0,10,144" FontSize="14" Padding="5" RenderTransformOrigin="0.516,-3.329"/>
+    </Grid>
+</Window>

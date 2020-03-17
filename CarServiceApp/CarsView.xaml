@@ -1,0 +1,46 @@
+﻿<Window x:Class="CarServiceApp.CarsView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CarServiceApp"
+        mc:Ignorable="d"
+        Title="CarsView" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="400*"/>
+            <ColumnDefinition Width="400"/>
+        </Grid.ColumnDefinitions>
+
+        <ListBox Grid.Column="0" ItemsSource="{Binding Cars}"
+                 SelectedItem="{Binding SelectedCar}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Margin="5">
+                        <TextBlock FontSize="18" Text="{Binding Path=Brand}" />
+                        <TextBlock Text="{Binding Path=Model}" />
+                        <TextBlock Text="{Binding Path=Government_Number}" />
+                        <TextBlock Text="{Binding Path=Mileage}" />
+                        <TextBlock Text="{Binding Path=Engine_Capacity}" />
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <StackPanel Grid.Column="1" DataContext="{Binding SelectedCar}" VerticalAlignment="Top" Height="200">
+            <TextBlock Text="Выбранный элемент"  />
+            <TextBlock Text="Марка" />
+            <TextBox Text="{Binding Brand}" IsEnabled="False"/>
+            <TextBlock Text="Модель" />
+            <TextBox Text="{Binding Model}" IsEnabled="False"/>
+            <TextBlock Text="Государственный номер" />
+            <TextBox Text="{Binding Government_Number}" IsEnabled="False"/>
+            <TextBlock Text="Пробег" />
+            <TextBox Text="{Binding Mileage}" IsEnabled="False"/>
+            <TextBlock Text="Объем двигателя" />
+            <TextBox Text="{Binding Engine_Capacity}" IsEnabled="False"/>
+        </StackPanel>
+        <Button Content="Создать" Command="{Binding AddCommand}" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="10,0,10,188" FontSize="14" Padding="5" RenderTransformOrigin="0.516,-3.329"/>
+        <Button Content="Изменить" Command="{Binding UpdateCommand}" CommandParameter="{Binding SelectedCar}" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="10,0,10,144" FontSize="14" Padding="5" RenderTransformOrigin="0.516,-3.329"/>
+        <Button Content="Удалить" Command="{Binding DeleteCommand}" CommandParameter="{Binding SelectedCar}" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="10,0,10,96" FontSize="14" Padding="5" RenderTransformOrigin="0.516,-3.329"/>
+    </Grid>
+</Window>

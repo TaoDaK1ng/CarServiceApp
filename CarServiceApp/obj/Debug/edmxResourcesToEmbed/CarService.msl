@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="Хранилище CarServiceDBModelContainer" CdmEntityContainer="CarServiceDBEntities">
+    <EntitySetMapping Name="Cars">
+      <EntityTypeMapping TypeName="CarServiceDBModel.Cars">
+        <MappingFragment StoreEntitySet="Cars">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Brand" ColumnName="Brand" />
+          <ScalarProperty Name="Model" ColumnName="Model" />
+          <ScalarProperty Name="Government_Number" ColumnName="Government_Number" />
+          <ScalarProperty Name="Mileage" ColumnName="Mileage" />
+          <ScalarProperty Name="Engine_Capacity" ColumnName="Engine_Capacity" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Masters">
+      <EntityTypeMapping TypeName="CarServiceDBModel.Masters">
+        <MappingFragment StoreEntitySet="Masters">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="First_Name" ColumnName="First_Name" />
+          <ScalarProperty Name="Second_Name" ColumnName="Second_Name" />
+          <ScalarProperty Name="Middle_Name" ColumnName="Middle_Name" />
+          <ScalarProperty Name="Phone_Number" ColumnName="Phone_Number" />
+          <ScalarProperty Name="Work_Experience" ColumnName="Work_Experience" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Owners">
+      <EntityTypeMapping TypeName="CarServiceDBModel.Owners">
+        <MappingFragment StoreEntitySet="Owners">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="First_Name" ColumnName="First_Name" />
+          <ScalarProperty Name="Second_Name" ColumnName="Second_Name" />
+          <ScalarProperty Name="Middle_Name" ColumnName="Middle_Name" />
+          <ScalarProperty Name="Phone_Number" ColumnName="Phone_Number" />
+          <ScalarProperty Name="Address_Of_Residence" ColumnName="Address_Of_Residence" />
+          <ScalarProperty Name="Passport_Data" ColumnName="Passport_Data" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RepairCars">
+      <EntityTypeMapping TypeName="CarServiceDBModel.RepairCars">
+        <MappingFragment StoreEntitySet="RepairCars">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Master_Id" ColumnName="Master_Id" />
+          <ScalarProperty Name="Car_Id" ColumnName="Car_Id" />
+          <ScalarProperty Name="Malfunction" ColumnName="Malfunction" />
+          <ScalarProperty Name="Production_Date" ColumnName="Production_Date" />
+          <ScalarProperty Name="Expiration_Date" ColumnName="Expiration_Date" />
+          <ScalarProperty Name="Cost" ColumnName="Cost" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="OwnerCars" TypeName="CarServiceDBModel.OwnerCars" StoreEntitySet="OwnerCars">
+      <EndProperty Name="Cars">
+        <ScalarProperty Name="Id" ColumnName="Car_Id" />
+      </EndProperty>
+      <EndProperty Name="Owners">
+        <ScalarProperty Name="Id" ColumnName="Owner_Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping>

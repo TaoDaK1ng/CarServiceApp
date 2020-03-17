@@ -1,0 +1,32 @@
+﻿<Window x:Class="CarServiceApp.RepairCarView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CarServiceApp"
+        mc:Ignorable="d"
+        Title="RepairCarView" Height="450" Width="800">
+    <Grid RenderTransformOrigin="0.5,0.707">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Column="0" VerticalAlignment="Top" Height="240">
+            <TextBlock Text="Выбранный элемент"  />
+            <TextBlock Text="Машина" />
+            <ComboBox Name="CarsComboBox" ItemsSource="{Binding Cars}" DisplayMemberPath="Brand" SelectedValuePath="Id" SelectedItem="{Binding SelectedCar}" SelectedValue="{Binding Car_Id}"/>
+            <TextBlock Text="Мастер" />
+            <ComboBox Name="MastersComboBox" ItemsSource="{Binding Masters}" DisplayMemberPath="Second_Name" SelectedValuePath="Id" SelectedItem="{Binding SelectedMaster}" SelectedValue="{Binding Master_Id}"/>
+            <TextBlock Text="Неисправность" />
+            <TextBox Text="{Binding Malfunction}"/>
+            <TextBlock Text="Дата постановки" />
+            <DatePicker SelectedDateFormat="Short" SelectedDate="{Binding Production_Date}"/>
+            <TextBlock Text="Дата окончания" />
+            <DatePicker SelectedDateFormat="Short" SelectedDate="{Binding Expiration_Date}"/>
+            <TextBlock Text="Стоимость" />
+            <TextBox Text="{Binding Cost}"/>
+        </StackPanel>
+        <Button Name="AddButton" Command="{Binding AddCommand}" Content="Создать" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="10,0,10,134" FontSize="14" Padding="5" RenderTransformOrigin="0.516,-3.329"/>
+        <Button Name="UpdateButton" Command="{Binding UpdateCommand}" Content="Изменить" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="10,0,10,134" FontSize="14" Padding="5" RenderTransformOrigin="0.516,-3.329"/>
+        <Button Name="CancelButton" Command="{Binding CancelCommand}" Content="Отмена" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="10,0,10,90" FontSize="14" Padding="5" RenderTransformOrigin="0.516,-3.329"/>
+    </Grid>
+</Window>

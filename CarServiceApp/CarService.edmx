@@ -1,0 +1,342 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище CarServiceDBModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Cars">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Brand" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Model" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Government_Number" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Mileage" Type="int" Nullable="false" />
+          <Property Name="Engine_Capacity" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Masters">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="First_Name" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Second_Name" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Middle_Name" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Phone_Number" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Work_Experience" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "CarServiceDB.dbo.OwnerCars" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+        <EntityType Name="OwnerCars">
+          <Key>
+            <PropertyRef Name="Owner_Id" />
+            <PropertyRef Name="Car_Id" />
+          </Key>
+          <Property Name="Owner_Id" Type="int" Nullable="false" />
+          <Property Name="Car_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Owners">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="First_Name" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Second_Name" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Middle_Name" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Phone_Number" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Address_Of_Residence" Type="nvarchar" MaxLength="100" />
+          <Property Name="Passport_Data" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="RepairCars">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Master_Id" Type="int" Nullable="false" />
+          <Property Name="Car_Id" Type="int" Nullable="false" />
+          <Property Name="Malfunction" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Production_Date" Type="date" Nullable="false" />
+          <Property Name="Expiration_Date" Type="date" />
+          <Property Name="Cost" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_OwnerCars_To_Cars">
+          <End Role="Cars" Type="Self.Cars" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="OwnerCars" Type="Self.OwnerCars" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cars">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OwnerCars">
+              <PropertyRef Name="Car_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OwnerCars_To_Owners">
+          <End Role="Owners" Type="Self.Owners" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="OwnerCars" Type="Self.OwnerCars" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Owners">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OwnerCars">
+              <PropertyRef Name="Owner_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RepairCars_To_Cars">
+          <End Role="Cars" Type="Self.Cars" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="RepairCars" Type="Self.RepairCars" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cars">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RepairCars">
+              <PropertyRef Name="Car_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RepairCars_To_Masters">
+          <End Role="Masters" Type="Self.Masters" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="RepairCars" Type="Self.RepairCars" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Masters">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RepairCars">
+              <PropertyRef Name="Master_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище CarServiceDBModelContainer">
+          <EntitySet Name="Cars" EntityType="Self.Cars" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Masters" EntityType="Self.Masters" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Owners" EntityType="Self.Owners" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RepairCars" EntityType="Self.RepairCars" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OwnerCars" EntityType="Self.OwnerCars" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [OwnerCars].[Owner_Id] AS [Owner_Id], 
+    [OwnerCars].[Car_Id] AS [Car_Id]
+    FROM [dbo].[OwnerCars] AS [OwnerCars]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_OwnerCars_To_Cars" Association="Self.FK_OwnerCars_To_Cars">
+            <End Role="Cars" EntitySet="Cars" />
+            <End Role="OwnerCars" EntitySet="OwnerCars" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OwnerCars_To_Owners" Association="Self.FK_OwnerCars_To_Owners">
+            <End Role="Owners" EntitySet="Owners" />
+            <End Role="OwnerCars" EntitySet="OwnerCars" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RepairCars_To_Cars" Association="Self.FK_RepairCars_To_Cars">
+            <End Role="Cars" EntitySet="Cars" />
+            <End Role="RepairCars" EntitySet="RepairCars" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RepairCars_To_Masters" Association="Self.FK_RepairCars_To_Masters">
+            <End Role="Masters" EntitySet="Masters" />
+            <End Role="RepairCars" EntitySet="RepairCars" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CarServiceDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Cars">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Brand" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Model" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Government_Number" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Mileage" Type="Int32" Nullable="false" />
+          <Property Name="Engine_Capacity" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="RepairCars" Relationship="Self.FK_RepairCars_To_Cars" FromRole="Cars" ToRole="RepairCars" />
+          <NavigationProperty Name="Owners" Relationship="Self.OwnerCars" FromRole="Cars" ToRole="Owners" />
+        </EntityType>
+        <EntityType Name="Masters">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="First_Name" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Second_Name" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Middle_Name" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Phone_Number" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Work_Experience" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="RepairCars" Relationship="Self.FK_RepairCars_To_Masters" FromRole="Masters" ToRole="RepairCars" />
+        </EntityType>
+        <EntityType Name="Owners">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="First_Name" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Second_Name" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Middle_Name" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Phone_Number" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Address_Of_Residence" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Passport_Data" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Cars" Relationship="Self.OwnerCars" FromRole="Owners" ToRole="Cars" />
+        </EntityType>
+        <EntityType Name="RepairCars">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Master_Id" Type="Int32" Nullable="false" />
+          <Property Name="Car_Id" Type="Int32" Nullable="false" />
+          <Property Name="Malfunction" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Production_Date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Expiration_Date" Type="DateTime" Precision="0" />
+          <Property Name="Cost" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Cars" Relationship="Self.FK_RepairCars_To_Cars" FromRole="RepairCars" ToRole="Cars" />
+          <NavigationProperty Name="Masters" Relationship="Self.FK_RepairCars_To_Masters" FromRole="RepairCars" ToRole="Masters" />
+        </EntityType>
+        <Association Name="FK_RepairCars_To_Cars">
+          <End Role="Cars" Type="Self.Cars" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="RepairCars" Type="Self.RepairCars" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cars">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RepairCars">
+              <PropertyRef Name="Car_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RepairCars_To_Masters">
+          <End Role="Masters" Type="Self.Masters" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="RepairCars" Type="Self.RepairCars" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Masters">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RepairCars">
+              <PropertyRef Name="Master_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="OwnerCars">
+          <End Role="Cars" Type="Self.Cars" Multiplicity="*" />
+          <End Role="Owners" Type="Self.Owners" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="CarServiceDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Cars" EntityType="Self.Cars" />
+          <EntitySet Name="Masters" EntityType="Self.Masters" />
+          <EntitySet Name="Owners" EntityType="Self.Owners" />
+          <EntitySet Name="RepairCars" EntityType="Self.RepairCars" />
+          <AssociationSet Name="FK_RepairCars_To_Cars" Association="Self.FK_RepairCars_To_Cars">
+            <End Role="Cars" EntitySet="Cars" />
+            <End Role="RepairCars" EntitySet="RepairCars" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RepairCars_To_Masters" Association="Self.FK_RepairCars_To_Masters">
+            <End Role="Masters" EntitySet="Masters" />
+            <End Role="RepairCars" EntitySet="RepairCars" />
+          </AssociationSet>
+          <AssociationSet Name="OwnerCars" Association="Self.OwnerCars">
+            <End Role="Cars" EntitySet="Cars" />
+            <End Role="Owners" EntitySet="Owners" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище CarServiceDBModelContainer" CdmEntityContainer="CarServiceDBEntities">
+          <EntitySetMapping Name="Cars">
+            <EntityTypeMapping TypeName="CarServiceDBModel.Cars">
+              <MappingFragment StoreEntitySet="Cars">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Brand" ColumnName="Brand" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="Government_Number" ColumnName="Government_Number" />
+                <ScalarProperty Name="Mileage" ColumnName="Mileage" />
+                <ScalarProperty Name="Engine_Capacity" ColumnName="Engine_Capacity" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Masters">
+            <EntityTypeMapping TypeName="CarServiceDBModel.Masters">
+              <MappingFragment StoreEntitySet="Masters">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="First_Name" ColumnName="First_Name" />
+                <ScalarProperty Name="Second_Name" ColumnName="Second_Name" />
+                <ScalarProperty Name="Middle_Name" ColumnName="Middle_Name" />
+                <ScalarProperty Name="Phone_Number" ColumnName="Phone_Number" />
+                <ScalarProperty Name="Work_Experience" ColumnName="Work_Experience" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Owners">
+            <EntityTypeMapping TypeName="CarServiceDBModel.Owners">
+              <MappingFragment StoreEntitySet="Owners">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="First_Name" ColumnName="First_Name" />
+                <ScalarProperty Name="Second_Name" ColumnName="Second_Name" />
+                <ScalarProperty Name="Middle_Name" ColumnName="Middle_Name" />
+                <ScalarProperty Name="Phone_Number" ColumnName="Phone_Number" />
+                <ScalarProperty Name="Address_Of_Residence" ColumnName="Address_Of_Residence" />
+                <ScalarProperty Name="Passport_Data" ColumnName="Passport_Data" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RepairCars">
+            <EntityTypeMapping TypeName="CarServiceDBModel.RepairCars">
+              <MappingFragment StoreEntitySet="RepairCars">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Master_Id" ColumnName="Master_Id" />
+                <ScalarProperty Name="Car_Id" ColumnName="Car_Id" />
+                <ScalarProperty Name="Malfunction" ColumnName="Malfunction" />
+                <ScalarProperty Name="Production_Date" ColumnName="Production_Date" />
+                <ScalarProperty Name="Expiration_Date" ColumnName="Expiration_Date" />
+                <ScalarProperty Name="Cost" ColumnName="Cost" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="OwnerCars" TypeName="CarServiceDBModel.OwnerCars" StoreEntitySet="OwnerCars">
+            <EndProperty Name="Cars">
+              <ScalarProperty Name="Id" ColumnName="Car_Id" />
+            </EndProperty>
+            <EndProperty Name="Owners">
+              <ScalarProperty Name="Id" ColumnName="Owner_Id" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

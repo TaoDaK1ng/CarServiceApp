@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="CarServiceDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Cars">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Brand" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Model" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Government_Number" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Mileage" Type="Int32" Nullable="false" />
+    <Property Name="Engine_Capacity" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="RepairCars" Relationship="Self.FK_RepairCars_To_Cars" FromRole="Cars" ToRole="RepairCars" />
+    <NavigationProperty Name="Owners" Relationship="Self.OwnerCars" FromRole="Cars" ToRole="Owners" />
+  </EntityType>
+  <EntityType Name="Masters">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="First_Name" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Second_Name" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Middle_Name" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Phone_Number" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Work_Experience" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="RepairCars" Relationship="Self.FK_RepairCars_To_Masters" FromRole="Masters" ToRole="RepairCars" />
+  </EntityType>
+  <EntityType Name="Owners">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="First_Name" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Second_Name" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Middle_Name" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Phone_Number" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Address_Of_Residence" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Passport_Data" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Cars" Relationship="Self.OwnerCars" FromRole="Owners" ToRole="Cars" />
+  </EntityType>
+  <EntityType Name="RepairCars">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Master_Id" Type="Int32" Nullable="false" />
+    <Property Name="Car_Id" Type="Int32" Nullable="false" />
+    <Property Name="Malfunction" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Production_Date" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Expiration_Date" Type="DateTime" Precision="0" />
+    <Property Name="Cost" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Cars" Relationship="Self.FK_RepairCars_To_Cars" FromRole="RepairCars" ToRole="Cars" />
+    <NavigationProperty Name="Masters" Relationship="Self.FK_RepairCars_To_Masters" FromRole="RepairCars" ToRole="Masters" />
+  </EntityType>
+  <Association Name="FK_RepairCars_To_Cars">
+    <End Role="Cars" Type="Self.Cars" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="RepairCars" Type="Self.RepairCars" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cars">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="RepairCars">
+        <PropertyRef Name="Car_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RepairCars_To_Masters">
+    <End Role="Masters" Type="Self.Masters" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="RepairCars" Type="Self.RepairCars" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Masters">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="RepairCars">
+        <PropertyRef Name="Master_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="OwnerCars">
+    <End Role="Cars" Type="Self.Cars" Multiplicity="*" />
+    <End Role="Owners" Type="Self.Owners" Multiplicity="*" />
+  </Association>
+  <EntityContainer Name="CarServiceDBEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Cars" EntityType="Self.Cars" />
+    <EntitySet Name="Masters" EntityType="Self.Masters" />
+    <EntitySet Name="Owners" EntityType="Self.Owners" />
+    <EntitySet Name="RepairCars" EntityType="Self.RepairCars" />
+    <AssociationSet Name="FK_RepairCars_To_Cars" Association="Self.FK_RepairCars_To_Cars">
+      <End Role="Cars" EntitySet="Cars" />
+      <End Role="RepairCars" EntitySet="RepairCars" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RepairCars_To_Masters" Association="Self.FK_RepairCars_To_Masters">
+      <End Role="Masters" EntitySet="Masters" />
+      <End Role="RepairCars" EntitySet="RepairCars" />
+    </AssociationSet>
+    <AssociationSet Name="OwnerCars" Association="Self.OwnerCars">
+      <End Role="Cars" EntitySet="Cars" />
+      <End Role="Owners" EntitySet="Owners" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

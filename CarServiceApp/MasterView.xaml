@@ -1,0 +1,29 @@
+﻿<Window x:Class="CarServiceApp.MasterView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CarServiceApp"
+        mc:Ignorable="d"
+        Title="MasterView" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Column="0" VerticalAlignment="Top" Height="200">
+            <TextBlock Text="Имя" />
+            <TextBox Text="{Binding First_Name}"/>
+            <TextBlock Text="Фамилия" />
+            <TextBox Text="{Binding Second_Name}"/>
+            <TextBlock Text="Отчество" />
+            <TextBox Text="{Binding Middle_Name}"/>
+            <TextBlock Text="Номер телефона" />
+            <TextBox Text="{Binding Phone_Number}"/>
+            <TextBlock Text="Стаж работы" />
+            <TextBox Text="{Binding Work_Experience}"/>
+        </StackPanel>
+        <Button Name="AddButton" Command="{Binding AddCommand}" Content="Создать" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="10,0,10,198" FontSize="14" Padding="5" RenderTransformOrigin="0.516,-3.329"/>
+        <Button Name="UpdateButton" Command="{Binding UpdateCommand}" Content="Изменить" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="10,0,10,198" FontSize="14" Padding="5" RenderTransformOrigin="0.516,-3.329"/>
+        <Button Name="CancelButton" Command="{Binding CancelCommand}" Content="Отмена" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="10,0,10,151" FontSize="14" Padding="5" RenderTransformOrigin="0.516,-3.329"/>
+    </Grid>
+</Window>
